@@ -1,0 +1,14 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+extra-deps:
+- tensorflow-0.1.0.2
+- tensorflow-core-ops-0.1.0.0
+- tensorflow-opgen-0.1.0.0
+- tensorflow-ops-0.1.0.0
+- tensorflow-proto-0.1.0.0
+- normaldistribution-1.1.0.3
+- statistics-0.14.0.2
+- base-orphans-0.6
+resolver: lts-8.22
