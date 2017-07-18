@@ -16,11 +16,10 @@ import qualified Statistics.Sample as Stat
 import qualified Data.Vector as Vector
 import Text.Printf
 
-dump (x,y) = printf "%f\t%f\n" x y
 
 
 -- | R² of the model Ŷ = aX+b
--- Note that 'TF.gradient' doesn't even support Double's...
+-- Note that 'TF.gradient' doesn't support Double
 linearModelRSquared :: [Float] -> [Float] -> Float -> Float
                     -> Float
 linearModelRSquared xs ys a b = 1 - ssRes / ssTot
@@ -36,15 +35,16 @@ linearModelRSquared xs ys a b = 1 - ssRes / ssTot
 
 main :: IO ()
 main = do
-        noise <- replicateM 100 (Normal.normalIO' (0, 0.001))
+        -- Generate a list of Gaussian errors
+        noise <- replicateM 100 (Normal.normalIO' (0, 0.1))
 
         let xData = tail [0,0.01..1]
             yData = [ 3*x + 8 + e | (x,e) <- zip xData noise]
 
-       -- Fit linear regression model.
+       -- Fit the linear regression model.
         (w, b) <- fit xData yData
 
-       -- Calculate and print the R-squared for this model
+       -- Calculate and print the R-squared for the model
         let rSquared = linearModelRSquared xData yData w b
         printf "R^2 = %f\n" rSquared
 
